@@ -1,0 +1,115 @@
+CREATE DATABASE  alquiladora;
+USE alquiladora;
+
+
+CREATE TABLE roles (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);
+
+INSERT INTO roles (nombre) VALUES 
+('Administrador'),
+('Cliente'),
+('Empleado');
+
+
+CREATE TABLE usuarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellido_pa VARCHAR(50),
+    apellido_ma VARCHAR(50),
+    correo VARCHAR(100) UNIQUE,
+    telefono VARCHAR(15),
+    contrasena VARCHAR(255),
+    rol_id BIGINT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE SET NULL
+);
+
+
+CREATE TABLE clientes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id BIGINT,
+    direccion VARCHAR(100),
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE empleados (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id BIGINT,
+    puesto VARCHAR(50),
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE productos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10,2),
+    cantidad_disponible INT,
+    categoria ENUM('Accesorio','Carpa','Lona','Mesa','Silla','Inflable'),
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);
+
+
+CREATE TABLE rentas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    estado ENUM('Pendiente','Cancelado','Completado'),
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    total DECIMAL(10,2),
+    cliente_id BIGINT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE detalle_rentas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cantidad INT,
+    precio_unitario DECIMAL(10,2),
+    renta_id BIGINT,
+    producto_id BIGINT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (renta_id) REFERENCES rentas(id) ON DELETE CASCADE,
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE pagos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    monto DECIMAL(10,2),
+    metodo_pago ENUM('Efectivo','Tarjeta','Transferencia'),
+    fecha_pago DATE,
+    renta_id BIGINT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (renta_id) REFERENCES rentas(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE entregas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha_entregado DATE,
+    fecha_recogida DATE,
+    direccion_entrega VARCHAR(100),
+    renta_id BIGINT,
+    empleado_id BIGINT,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (renta_id) REFERENCES rentas(id) ON DELETE CASCADE,
+    FOREIGN KEY (empleado_id) REFERENCES empleados(id) ON DELETE SET NULL
+);
+
