@@ -70,6 +70,31 @@ class UsuariosController extends Controller
 
             'rol_id' => [
                 'required'
+            ],
+
+            'calle' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'numero' => [
+                'nullable',
+                'max:20'
+            ],
+
+            'codigo_postal' => [
+                'nullable',
+                'max:10'
+            ],
+
+            'municipio' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'estado' => [
+                'nullable',
+                'max:100'
             ]
         ]);
 
@@ -88,6 +113,16 @@ class UsuariosController extends Controller
             'contrasena' => bcrypt($request->contrasena),
 
             'rol_id' => $request->rol_id,
+
+            'calle' => $request->calle,
+
+            'numero' => $request->numero,
+
+            'codigo_postal' => $request->codigo_postal,
+
+            'municipio' => $request->municipio,
+
+            'estado' => $request->estado,
 
             'created_at' => now(),
 
@@ -140,6 +175,31 @@ class UsuariosController extends Controller
                 'required',
                 'min:8',
                 'max:50'
+            ],
+
+            'calle' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'numero' => [
+                'nullable',
+                'max:20'
+            ],
+
+            'codigo_postal' => [
+                'nullable',
+                'max:10'
+            ],
+
+            'municipio' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'estado' => [
+                'nullable',
+                'max:100'
             ]
         ]);
 
@@ -158,6 +218,16 @@ class UsuariosController extends Controller
             'contrasena' => bcrypt($request->contrasena),
 
             'rol_id' => 2,
+
+            'calle' => $request->calle,
+
+            'numero' => $request->numero,
+
+            'codigo_postal' => $request->codigo_postal,
+
+            'municipio' => $request->municipio,
+
+            'estado' => $request->estado,
 
             'created_at' => now(),
 
@@ -299,6 +369,31 @@ class UsuariosController extends Controller
             'telefono' => [
                 'required',
                 'digits:10'
+            ],
+
+            'calle' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'numero' => [
+                'nullable',
+                'max:20'
+            ],
+
+            'codigo_postal' => [
+                'nullable',
+                'max:10'
+            ],
+
+            'municipio' => [
+                'nullable',
+                'max:100'
+            ],
+
+            'estado' => [
+                'nullable',
+                'max:100'
             ]
         ]);
 
@@ -313,6 +408,16 @@ class UsuariosController extends Controller
             'correo' => $request->correo,
 
             'telefono' => $request->telefono,
+
+            'calle' => $request->calle,
+
+            'numero' => $request->numero,
+
+            'codigo_postal' => $request->codigo_postal,
+
+            'municipio' => $request->municipio,
+
+            'estado' => $request->estado,
 
             'rol_id' => $request->rol_id ?? 2,
 

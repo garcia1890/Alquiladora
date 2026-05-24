@@ -243,6 +243,72 @@
             </div>
 
 
+            {{-- CALLE --}}
+            <div class="form-group">
+
+                <label>Calle</label>
+
+                <input type="text"
+                       name="calle"
+                       value="{{ old('calle') }}"
+                       class="form-control">
+
+            </div>
+
+
+            {{-- NUMERO --}}
+            <div class="form-group">
+
+                <label>Número</label>
+
+                <input type="text"
+                       name="numero"
+                       value="{{ old('numero') }}"
+                       class="form-control">
+
+            </div>
+
+
+            {{-- CODIGO POSTAL --}}
+            <div class="form-group">
+
+                <label>Código Postal</label>
+
+                <input type="text"
+                       name="codigo_postal"
+                       maxlength="10"
+                       value="{{ old('codigo_postal') }}"
+                       class="form-control">
+
+            </div>
+
+
+            {{-- MUNICIPIO --}}
+            <div class="form-group">
+
+                <label>Municipio</label>
+
+                <input type="text"
+                       name="municipio"
+                       value="{{ old('municipio') }}"
+                       class="form-control">
+
+            </div>
+
+
+            {{-- ESTADO --}}
+            <div class="form-group full-width">
+
+                <label>Estado</label>
+
+                <input type="text"
+                       name="estado"
+                       value="{{ old('estado') }}"
+                       class="form-control">
+
+            </div>
+
+
             {{-- CONTRASEÑA --}}
             <div class="form-group">
 
@@ -259,7 +325,7 @@
 
 
             {{-- ROL --}}
-            <div class="form-group full-width">
+            <div class="form-group">
 
                 <label>Rol</label>
 

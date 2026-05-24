@@ -109,19 +109,27 @@
 
 <div class="main-container">
 
-    {{-- MENSAJE DE ÉXITO --}}
     @if(session('success'))
         <div class="alert alert-success alert-custom shadow mb-4">
             {{ session('success') }}
         </div>
     @endif
 
+    {{-- MOSTRAR ERRORES --}}
+    @if ($errors->any())
+        <div class="alert alert-danger shadow mb-4">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="card shadow-lg card-custom">
 
-        {{-- HEADER --}}
         <div class="card-header-custom text-center">
 
-            {{-- BOTÓN X --}}
             <a href="{{ route('login') }}"
                class="close-btn">
                 ✕
@@ -135,7 +143,9 @@
 
         <div class="card-body p-5">
 
-            <form action="{{ route('usuarios.registro') }}" method="POST">
+            <form action="{{ route('usuarios.registro') }}"
+                  method="POST">
+
                 @csrf
 
                 <div class="row g-4">
@@ -157,12 +167,10 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Nombre"
+                                           name="nombre"
                                            class="form-control"
-                                           value="{{ old('Nombre') }}"
+                                           value="{{ old('nombre') }}"
                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-                                           title="Solo letras"
-                                           oninput="this.value=this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúñÑ ]/g,'')"
                                            required>
                                 </div>
 
@@ -172,12 +180,10 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Ape_pat"
+                                           name="apellido_pa"
                                            class="form-control"
-                                           value="{{ old('Ape_pat') }}"
+                                           value="{{ old('apellido_pa') }}"
                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-                                           title="Solo letras"
-                                           oninput="this.value=this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúñÑ ]/g,'')"
                                            required>
                                 </div>
 
@@ -187,38 +193,10 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Ape_mat"
+                                           name="apellido_ma"
                                            class="form-control"
-                                           value="{{ old('Ape_mat') }}"
+                                           value="{{ old('apellido_ma') }}"
                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-                                           title="Solo letras"
-                                           oninput="this.value=this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúñÑ ]/g,'')"
-                                           required>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">
-                                        Fecha de Registro
-                                    </label>
-
-                                    <input type="date"
-                                           name="Fecha_registro"
-                                           class="form-control"
-                                           value="{{ date('Y-m-d') }}"
-                                           min="{{ date('Y-m-d') }}"
-                                           max="{{ date('Y-m-d') }}"
-                                           required>
-                                </div>
-
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label">
-                                        Usuario
-                                    </label>
-
-                                    <input type="text"
-                                           name="Nom_usuario"
-                                           class="form-control"
-                                           value="{{ old('Nom_usuario') }}"
                                            required>
                                 </div>
 
@@ -245,12 +223,11 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Telefono"
+                                           name="telefono"
                                            class="form-control"
                                            maxlength="10"
                                            pattern="[0-9]{10}"
-                                           title="Solo números"
-                                           value="{{ old('Telefono') }}"
+                                           value="{{ old('telefono') }}"
                                            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
                                            required>
                                 </div>
@@ -261,9 +238,9 @@
                                     </label>
 
                                     <input type="email"
-                                           name="Email"
+                                           name="correo"
                                            class="form-control"
-                                           value="{{ old('Email') }}"
+                                           value="{{ old('correo') }}"
                                            placeholder="ejemplo@correo.com"
                                            required>
                                 </div>
@@ -274,17 +251,14 @@
                                     </label>
 
                                     <input type="password"
-                                           name="Contrasena"
+                                           name="contrasena"
                                            class="form-control"
-                                           minlength="6"
-                                           maxlength="10"
-                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,10}$"
-                                           title="Debe contener mayúsculas, minúsculas y un carácter especial"
+                                           minlength="8"
+                                           maxlength="50"
                                            required>
 
                                     <small class="text-muted">
-                                        6-10 caracteres, usando mayúsculas,
-                                        minúsculas y símbolos.
+                                        Mínimo 8 caracteres.
                                     </small>
                                 </div>
 
@@ -311,10 +285,9 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Calle"
+                                           name="calle"
                                            class="form-control"
-                                           value="{{ old('Calle') }}"
-                                           required>
+                                           value="{{ old('calle') }}">
                                 </div>
 
                                 <div class="col-lg-2 col-md-6 mb-4">
@@ -323,11 +296,10 @@
                                     </label>
 
                                     <input type="text"
-                                           name="Numero"
+                                           name="numero"
                                            class="form-control"
-                                           value="{{ old('Numero') }}"
-                                           oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                                           required>
+                                           value="{{ old('numero') }}"
+                                           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                                 </div>
 
                                 <div class="col-lg-2 col-md-6 mb-4">
@@ -336,9 +308,8 @@
                                     </label>
 
                                     <select id="CP"
-                                            name="CP"
-                                            class="form-select"
-                                            required>
+                                            name="codigo_postal"
+                                            class="form-select">
 
                                         <option value="">
                                             Selecciona
@@ -360,10 +331,9 @@
 
                                     <input type="text"
                                            id="Municipio"
-                                           name="Municipio"
+                                           name="municipio"
                                            class="form-control bg-light"
-                                           readonly
-                                           required>
+                                           readonly>
                                 </div>
 
                                 <div class="col-lg-3 col-md-6 mb-4">
@@ -373,10 +343,9 @@
 
                                     <input type="text"
                                            id="Estado"
-                                           name="Estado"
+                                           name="estado"
                                            class="form-control bg-light"
-                                           readonly
-                                           required>
+                                           readonly>
                                 </div>
 
                             </div>
@@ -387,7 +356,6 @@
 
                 </div>
 
-                {{-- BOTONES --}}
                 <div class="text-center mt-5">
 
                     <button type="submit"
@@ -462,7 +430,6 @@ document.getElementById("CP")
 
         document.getElementById("Municipio").value = "";
         document.getElementById("Estado").value = "";
-
     }
 
 });

@@ -25,6 +25,54 @@
         opacity:.9;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | MENU CLIENTE
+    |--------------------------------------------------------------------------
+    */
+
+    .top-actions{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:20px;
+        margin-bottom:30px;
+    }
+
+    .action-card{
+        background:white;
+        padding:25px;
+        border-radius:20px;
+        text-decoration:none;
+        color:#222;
+        box-shadow:0 5px 20px rgba(0,0,0,.08);
+        transition:.3s;
+    }
+
+    .action-card:hover{
+        transform:translateY(-5px);
+        color:#0d6efd;
+    }
+
+    .action-icon{
+        font-size:40px;
+        margin-bottom:10px;
+    }
+
+    .action-card h3{
+        margin-bottom:8px;
+    }
+
+    .action-card p{
+        color:#666;
+        font-size:15px;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CATEGORÍAS
+    |--------------------------------------------------------------------------
+    */
+
     .cards-grid{
         display:grid;
         grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -55,6 +103,12 @@
         margin-bottom:10px;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | ESTADÍSTICAS
+    |--------------------------------------------------------------------------
+    */
+
     .stats{
         display:grid;
         grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -81,6 +135,73 @@
     }
 
 </style>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="GAOS2"
+  agent-id="8562d840-70e5-4ab8-931a-308807bc9ff0"
+  language-code="es"
+></df-messenger>
+
+{{-- MENU CLIENTE --}}
+<div class="top-actions">
+
+    {{-- PERFIL --}}
+    <a href="{{ route('cliente.perfil') }}" class="action-card">
+
+        <div class="action-icon">👤</div>
+
+        <h3>Mi Perfil</h3>
+
+        <p>
+            Edita tu información personal.
+        </p>
+
+    </a>
+
+
+    {{-- CARRITO --}}
+    <a href="{{ route('cliente.carrito') }}" class="action-card">
+
+        <div class="action-icon">🛒</div>
+
+        <h3>Carrito</h3>
+
+        <p>
+            Consulta tus productos agregados.
+        </p>
+
+    </a>
+
+
+    {{-- RENTAS --}}
+    <a href="{{ route('cliente.rentas') }}" class="action-card">
+
+        <div class="action-icon">📦</div>
+
+        <h3>Mis Rentas</h3>
+
+        <p>
+            Visualiza tus rentas activas.
+        </p>
+
+    </a>
+
+
+    {{-- FAVORITOS --}}
+    <a href="#" class="action-card">
+
+        <div class="action-icon">❤️</div>
+
+        <h3>Favoritos</h3>
+
+        <p>
+            Guarda tus productos favoritos.
+        </p>
+
+    </a>
+
+</div>
 
 
 {{-- BIENVENIDA --}}
@@ -150,6 +271,80 @@
         </p>
 
     </a>
+
+</div>
+
+//productos disponibles
+<div style="margin-top:50px;">
+
+    <h2 style="margin-bottom:20px;">
+        Productos Disponibles
+    </h2>
+
+    <div class="cards-grid">
+
+        @foreach($productos as $producto)
+
+            <div class="card">
+
+                <h3>
+                    {{ $producto->nombre }}
+                </h3>
+
+                <p>
+                    {{ $producto->descripcion }}
+                </p>
+
+                <h2 style="margin:15px 0;">
+                    ${{ $producto->precio }}
+                </h2>
+
+                <p>
+                    Stock:
+                    {{ $producto->stock_disponible }}
+                </p>
+
+                <form action="{{ route('cliente.agregar.carrito') }}"
+                      method="POST">
+
+                    @csrf
+
+                    <input type="hidden"
+                           name="producto_id"
+                           value="{{ $producto->id }}">
+
+                    <input type="number"
+                           name="cantidad"
+                           value="1"
+                           min="1"
+                           max="{{ $producto->stock_disponible }}"
+                           style="
+                                width:100%;
+                                padding:10px;
+                                margin:10px 0;
+                           ">
+
+                    <button type="submit"
+                            style="
+                                width:100%;
+                                background:#111;
+                                color:white;
+                                border:none;
+                                padding:12px;
+                                border-radius:10px;
+                            ">
+
+                        Agregar al carrito 🛒
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        @endforeach
+
+    </div>
 
 </div>
 

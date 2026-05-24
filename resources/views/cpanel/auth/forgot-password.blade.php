@@ -1,6 +1,6 @@
 @extends('cpanel.app')
 
-@section('title', 'Iniciar Sesión')
+@section('title', 'Recuperar Contraseña')
 
 @section('content')
 
@@ -12,7 +12,7 @@ body{
 }
 
 /* CONTENEDOR */
-.login-wrapper{
+.recovery-wrapper{
     display:flex;
     justify-content:center;
     align-items:center;
@@ -20,10 +20,10 @@ body{
     padding:20px;
 }
 
-/* CARD LOGIN */
-.login-container{
+/* CARD */
+.recovery-container{
     width:100%;
-    max-width:430px;
+    max-width:450px;
     background:rgba(255,255,255,0.08);
     backdrop-filter: blur(15px);
     border:1px solid rgba(255,255,255,0.1);
@@ -37,31 +37,32 @@ body{
 }
 
 /* ICONO */
-.login-icon{
-    width:90px;
-    height:90px;
+.recovery-icon{
+    width:95px;
+    height:95px;
     margin:0 auto 20px;
     border-radius:50%;
-    background:linear-gradient(135deg,#3b82f6,#06b6d4);
+    background:linear-gradient(135deg,#f59e0b,#f97316);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:40px;
-    box-shadow:0 5px 20px rgba(59,130,246,0.5);
+    font-size:42px;
+    box-shadow:0 5px 20px rgba(249,115,22,0.5);
 }
 
 /* TITULOS */
-.login-title{
+.recovery-title{
     text-align:center;
     font-size:2em;
     font-weight:bold;
-    margin-bottom:5px;
+    margin-bottom:8px;
 }
 
-.login-subtitle{
+.recovery-subtitle{
     text-align:center;
     color:#cbd5e1;
     margin-bottom:30px;
+    line-height:1.6;
     font-size:0.95em;
 }
 
@@ -96,7 +97,7 @@ body{
     font-weight:500;
 }
 
-/* INPUTS */
+/* INPUT */
 .form-control{
     width:100%;
     padding:14px;
@@ -115,49 +116,49 @@ body{
 
 .form-control:focus{
     background:rgba(255,255,255,0.18);
-    box-shadow:0 0 0 3px rgba(59,130,246,0.35);
+    box-shadow:0 0 0 3px rgba(249,115,22,0.35);
     transform:translateY(-2px);
 }
 
 /* BOTON */
-.login-btn{
+.recovery-btn{
     width:100%;
     padding:14px;
     border:none;
     border-radius:14px;
-    background:linear-gradient(135deg,#3b82f6,#06b6d4);
+    background:linear-gradient(135deg,#f59e0b,#f97316);
     color:white;
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
     transition:0.3s;
-    box-shadow:0 5px 15px rgba(59,130,246,0.4);
+    box-shadow:0 5px 15px rgba(249,115,22,0.4);
 }
 
-.login-btn:hover{
+.recovery-btn:hover{
     transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(59,130,246,0.6);
+    box-shadow:0 8px 20px rgba(249,115,22,0.6);
 }
 
 /* LINK */
-.forgot-password{
+.back-login{
     margin-top:18px;
     text-align:center;
 }
 
-.forgot-password a{
-    color:#93c5fd;
+.back-login a{
+    color:#fdba74;
     text-decoration:none;
     transition:0.3s;
 }
 
-.forgot-password a:hover{
+.back-login a:hover{
     color:white;
     text-decoration:underline;
 }
 
 /* FOOTER */
-.login-footer{
+.recovery-footer{
     text-align:center;
     margin-top:25px;
     color:#cbd5e1;
@@ -178,20 +179,22 @@ body{
 
 </style>
 
-<div class="login-wrapper">
+<div class="recovery-wrapper">
 
-    <div class="login-container">
+    <div class="recovery-container">
 
-        <div class="login-icon">
-            🔐
+        <div class="recovery-icon">
+            🔑
         </div>
 
-        <h2 class="login-title">
-            Bienvenido
+        <h2 class="recovery-title">
+            Recuperar Contraseña
         </h2>
 
-        <p class="login-subtitle">
-            Accede al sistema de Alquiladora GAOS
+        <p class="recovery-subtitle">
+            Ingresa tu correo electrónico y te enviaremos
+            una nueva contraseña temporal para acceder
+            al sistema.
         </p>
 
         @if(session('error'))
@@ -206,10 +209,11 @@ body{
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login.process') }}">
+        <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
             <div class="form-group">
+
                 <label>Correo electrónico</label>
 
                 <input
@@ -219,33 +223,22 @@ body{
                     placeholder="Ingresa tu correo"
                     required
                 >
+
             </div>
 
-            <div class="form-group">
-                <label>Contraseña</label>
-
-                <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="Ingresa tu contraseña"
-                    required
-                >
-            </div>
-
-            <button type="submit" class="login-btn">
-                Ingresar al sistema
+            <button type="submit" class="recovery-btn">
+                Enviar nueva contraseña
             </button>
 
-            <div class="forgot-password">
-                <a href="{{ route('password.request') }}">
-                    ¿Olvidaste tu contraseña?
+            <div class="back-login">
+                <a href="{{ route('login') }}">
+                    ← Volver al inicio de sesión
                 </a>
             </div>
 
         </form>
 
-        <div class="login-footer">
+        <div class="recovery-footer">
             © {{ date('Y') }} Alquiladora GAOS
         </div>
 

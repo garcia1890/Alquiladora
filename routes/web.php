@@ -9,6 +9,10 @@ use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\AdminProductoController;
 use App\Http\Controllers\AdminRentaController;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\LoginController;
+
 
 
 /*
@@ -323,3 +327,91 @@ Route::get('/app', function () {
 
 Route::post('/registro', [UsuariosController::class, 'registro'])
     ->name('usuarios.registro');
+
+
+    /*
+|--------------------------------------------------------------------------
+| CLIENTE
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/cliente/perfil', function () {
+
+    return view('cpanel.cliente.perfil');
+
+})->name('cliente.perfil');
+
+
+Route::get('/cliente/carrito', function () {
+
+    return view('cpanel.cliente.carrito');
+
+})->name('cliente.carrito');
+
+
+Route::get('/cliente/rentas', function () {
+
+    return view('cpanel.cliente.rentas');
+
+})->name('cliente.rentas');
+
+
+Route::get('/perfil', [ClientesController::class, 'perfil'])
+    ->name('cliente.perfil');
+
+Route::post('/perfil/actualizar', [ClientesController::class, 'actualizarPerfil'])
+    ->name('cliente.actualizarPerfil');
+
+    /*
+|--------------------------------------------------------------------------
+| RECUPERAR CONTRASEÑA
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/forgot-password',
+    [PasswordResetController::class, 'showForgotForm']
+)->name('password.request');
+
+Route::post('/forgot-password',
+    [PasswordResetController::class, 'sendResetLink']
+)->name('password.email');
+
+
+
+Route::post('/reset-password',
+    [PasswordResetController::class, 'resetPassword']
+)->name('password.update');
+
+//CLIENTE - AGREGAR AL CARRITO
+Route::post('/cliente/agregar-carrito',
+    [ClientesController::class, 'agregarCarrito'])
+    ->name('cliente.agregar.carrito');
+
+    Route::get('/cliente/dashboard',
+    [ClientesController::class, 'dashboard'])
+    ->name('cliente.dashboard');
+
+
+    Route::post('/cliente/agregar-carrito',
+    [ClientesController::class, 'agregarCarrito'])
+    ->name('cliente.agregar.carrito');
+
+    Route::get('/cliente/carrito',
+    [ClientesController::class, 'carrito'])
+    ->name('cliente.carrito');
+
+    Route::post('/cliente/confirmar-renta',
+    [ClientesController::class, 'confirmarRenta'])
+    ->name('cliente.confirmar.renta');
+
+    Route::get('/cliente/rentas',
+    [ClientesController::class, 'rentas'])
+    ->name('cliente.rentas');
+
+    Route::get('/cliente/confirmar-renta',
+    [ClientesController::class, 'confirmarRentaView'])
+    ->name('cliente.confirmar.renta.view');
+
+Route::post('/cliente/guardar-renta',
+    [ClientesController::class, 'confirmarRenta'])
+    ->name('cliente.guardar.renta');
